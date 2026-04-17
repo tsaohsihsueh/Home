@@ -21,13 +21,15 @@ import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 
 import cloudflare from "@astrojs/cloudflare";
 
+import vercel from "@astrojs/vercel";
+
 // https://astro.build/config
 export default defineConfig({
   site: siteConfig.url,
 
   image: {
       domains: ["webmention.io"],
-	},
+    },
 
   integrations: [
       expressiveCode(expressiveCodeOptions),
@@ -69,7 +71,7 @@ export default defineConfig({
               insertManifestLink: false,
           },
       }),
-	],
+    ],
 
   markdown: {
       rehypePlugins: [
@@ -90,14 +92,14 @@ export default defineConfig({
               className: [""],
           },
       },
-	},
+    },
 
   vite: {
       optimizeDeps: {
           exclude: ["@resvg/resvg-js"],
       },
       plugins: [tailwind(), rawFonts([".ttf", ".woff"])],
-	},
+    },
 
   env: {
       schema: {
@@ -105,9 +107,9 @@ export default defineConfig({
           WEBMENTION_URL: envField.string({ context: "client", access: "public", optional: true }),
           WEBMENTION_PINGBACK: envField.string({ context: "client", access: "public", optional: true }),
       },
-	},
+    },
 
-  adapter: cloudflare()
+  adapter: vercel()
 });
 
 function rawFonts(ext: string[]) {
